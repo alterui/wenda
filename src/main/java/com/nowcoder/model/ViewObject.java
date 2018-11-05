@@ -8,12 +8,16 @@ import java.util.Map;
  */
 
 public class ViewObject {
-    private Map<String, Object> objs = new HashMap<String, Object>();
+    /**
+     * 可以使用Map集合存放数据
+     */
+    private Map<String, Object> vo = new HashMap<>();
+
     public void set(String key, Object value) {
-        objs.put(key, value);
+        vo.put(key, value);
     }
 
     public Object get(String key) {
-        return objs.get(key);
+        return vo.get(key);
     }
 }
