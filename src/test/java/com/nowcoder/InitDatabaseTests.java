@@ -1,7 +1,9 @@
 package com.nowcoder;
 
+import com.nowcoder.dao.LoginTicketDao;
 import com.nowcoder.dao.QuestionDAO;
 import com.nowcoder.dao.UserDAO;
+import com.nowcoder.model.LoginTicket;
 import com.nowcoder.model.Question;
 import com.nowcoder.model.User;
 import org.junit.Assert;
@@ -14,16 +16,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WendaApplication.class)
 @Sql("/init-schema.sql")
 public class InitDatabaseTests {
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
-    QuestionDAO questionDAO;
+    private QuestionDAO questionDAO;
+
+    @Autowired
+    private LoginTicketDao loginTicketDao;
 
     @Test
     public void contextLoads() {
@@ -53,5 +59,22 @@ public class InitDatabaseTests {
         Assert.assertEquals("newpassword", userDAO.selectById(1).getPassword());
         userDAO.deleteById(1);
         Assert.assertNull(userDAO.selectById(1));
+    }
+
+    @Test
+    public void loginTicketTest() {
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setStatus(1);
+        loginTicket.setUserId(2);
+        loginTicket.setTicket(UUID.randomUUID().toString().replace("-", ""));
+
+        Date date = new Date();
+        date.setTime(date.getTime() + 1000 * 60 * 60 * 24 * 3);
+
+        loginTicket.setExpired(date);
+
+        loginTicketDao.addTicket(loginTicket);
+
+
     }
 }

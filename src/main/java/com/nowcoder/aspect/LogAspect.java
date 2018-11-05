@@ -14,8 +14,8 @@ import java.util.Date;
  * Created by ALTERUI on 2018/11/4
  */
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LogAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
 
