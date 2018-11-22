@@ -2,6 +2,7 @@ package com.nowcoder.controller;
 
 import com.nowcoder.service.UserService;
 import com.sun.deploy.net.HttpResponse;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class LoginController {
     public String register(Model model,
                            @RequestParam("username") String username,
                            @RequestParam("password") String password,
+                           @RequestParam(value = "next",required = false) String next,
                            HttpServletResponse response) {
 
         /**
@@ -42,6 +44,16 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", map.get("ticket"));
                 cookie.setPath("/");
                 response.addCookie(cookie);
+
+                /**
+                 * $!{next}：如果有值则输出，如果为空，则不显示；
+                 *
+                 * ${next}：如果有值则输出，如果为空，则将该代码原样输出；
+                 */
+                if (StringUtils.isNotBlank(next)) {
+                    return "redirect:" + next;
+                }
+
                 return "redirect:/";
             } else {
                 model.addAttribute("msg", map.get("msg"));
@@ -54,7 +66,9 @@ public class LoginController {
     }
 
     @RequestMapping(path = "/regLogin" ,method = RequestMethod.GET)
-    public String reg() {
+    public String reg(Model model,
+                      @RequestParam(value = "next",required = false) String next) {
+        model.addAttribute("next", next);
         return "login";
     }
 
@@ -63,6 +77,7 @@ public class LoginController {
                         @RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam(value = "rememberme", defaultValue = "false") boolean rememberme,
+                        @RequestParam(value = "next", required = false) String next,
                         HttpServletResponse response) {
 
         Map<String, String> mapLogin = userService.login(username, password);
@@ -71,6 +86,9 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", mapLogin.get("ticket"));
                 cookie.setPath("/");
                 response.addCookie(cookie);
+                if (StringUtils.isNotBlank(next)) {
+                    return "redirect:" + next;
+                }
                 return "redirect:/";
             } else {
                 model.addAttribute("msg", mapLogin.get("msg"));

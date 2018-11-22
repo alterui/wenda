@@ -62,16 +62,10 @@ public class PassportInterceptor implements HandlerInterceptor {
             if (loginTicket == null || loginTicket.getExpired().before(new Date()) || loginTicket.getStatus() != 0) {
                 return true;
             }
-
             //把loginTicket的user写入上下文中，可以通过依赖注入写入
             User user = userDAO.selectById(loginTicket.getUserId());
             hostHolder.setUser(user);
-
-
         }
-
-
-
         return true;
     }
 

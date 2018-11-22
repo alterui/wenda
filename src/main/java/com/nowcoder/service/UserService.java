@@ -80,7 +80,7 @@ public class UserService {
 
         User user = userDAO.selectByName(username);
 
-        if (user.getName() == null) {
+        if (user == null) {
             map.put("msg", "用户名不存在");
             return map;
         }
