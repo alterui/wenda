@@ -4,7 +4,7 @@ import com.nowcoder.dao.LoginTicketDao;
 import com.nowcoder.dao.UserDAO;
 import com.nowcoder.model.LoginTicket;
 import com.nowcoder.model.User;
-import com.nowcoder.utils.MD5Util;
+import com.nowcoder.utils.WendaUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +57,7 @@ public class UserService {
         user.setName(username);
         user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", random.nextInt(1000)));
         user.setSalt(UUID.randomUUID().toString().substring(0, 5));
-        user.setPassword(MD5Util.getMD5(password + user.getSalt()) );
+        user.setPassword(WendaUtil.getMD5(password + user.getSalt()) );
 
         userDAO.addUser(user);
 
@@ -85,7 +85,7 @@ public class UserService {
             return map;
         }
 
-        if (!MD5Util.getMD5(password + user.getSalt()).equals(user.getPassword())) {
+        if (!WendaUtil.getMD5(password + user.getSalt()).equals(user.getPassword())) {
             map.put("msg", "密码输入错误");
 
             return map;
