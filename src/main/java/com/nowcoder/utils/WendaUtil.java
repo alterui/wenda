@@ -11,6 +11,9 @@ import java.security.MessageDigest;
  */
 public class WendaUtil {
 
+    //设置匿名用户
+    public static int ANONYMOUS_USERID = 3;
+
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
     public static String getJSONString(int code, String msg) {

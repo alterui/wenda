@@ -85,6 +85,9 @@ public class LoginController {
             if (mapLogin.containsKey("ticket")) {
                 Cookie cookie = new Cookie("ticket", mapLogin.get("ticket"));
                 cookie.setPath("/");
+                if (rememberme) {
+                    cookie.setMaxAge(3600 * 24 * 30);
+                }
                 response.addCookie(cookie);
                 if (StringUtils.isNotBlank(next)) {
                     return "redirect:" + next;

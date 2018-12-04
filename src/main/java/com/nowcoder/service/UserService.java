@@ -1,6 +1,6 @@
 package com.nowcoder.service;
 
-import com.nowcoder.dao.LoginTicketDao;
+import com.nowcoder.dao.LoginTicketDAO;
 import com.nowcoder.dao.UserDAO;
 import com.nowcoder.model.LoginTicket;
 import com.nowcoder.model.User;
@@ -23,7 +23,7 @@ public class UserService {
     private UserDAO userDAO;
 
     @Autowired
-    private LoginTicketDao loginTicketDao;
+    private LoginTicketDAO loginTicketDao;
 
     public User getUser(int id) {
         return userDAO.selectById(id);
@@ -103,7 +103,7 @@ public class UserService {
         ticket.setUserId(userId);
         ticket.setStatus(0);
         Date now = new Date();
-        now.setTime(now.getTime() + 3600 * 24 * 3);
+        now.setTime(now.getTime() + 3600 * 24 * 100);
         ticket.setExpired(now);
         ticket.setTicket(UUID.randomUUID().toString().replace("-", ""));
 

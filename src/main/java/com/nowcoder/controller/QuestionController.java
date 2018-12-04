@@ -1,8 +1,7 @@
 package com.nowcoder.controller;
 
-import com.nowcoder.model.HostHolder;
-import com.nowcoder.model.Question;
-import com.nowcoder.model.User;
+import com.nowcoder.model.*;
+import com.nowcoder.service.CommentService;
 import com.nowcoder.service.QuestionService;
 import com.nowcoder.service.UserService;
 import com.nowcoder.utils.WendaUtil;
@@ -13,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ALTERUI on 2018/11/23 10:02
@@ -26,6 +27,9 @@ public class QuestionController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -70,6 +74,17 @@ public class QuestionController {
 
         Question question = questionService.selectQuestionById(qid);
         User user = userService.getUser(question.getUserId());
+        List<Comment> commentListByEntity = commentService.getCommentListByEntity(question.getId(), EntityType.ENTITY_QUESTION, 0, 10);
+        List<ViewObject> comments = new ArrayList<>();
+        for (Comment comment : commentListByEntity) {
+            ViewObject vo = new ViewObject();
+            vo.set("comment", comment);
+            //将评论者的信息绑定到vo里面
+            vo.set("user", userService.getUser(comment.getUserId()));
+
+            comments.add(vo);
+        }
+        model.addAttribute("comments", comments);
         model.addAttribute("question", question);
         model.addAttribute("user", user);
         return "detail";

@@ -149,6 +149,7 @@ public class SensitiveService implements InitializingBean {
         while (position < text.length()) {
             //获取当前位置的字符
             char c = text.charAt(position);
+            //System.out.println(c);
             if (isSymbol(c)) {
                 if (tempNode == rootNode) {
                     sb.append(c);
@@ -160,8 +161,8 @@ public class SensitiveService implements InitializingBean {
             //查询下一节点是否有c
              tempNode = tempNode.getSubNode(c);
             if (tempNode == null) {//表明不是敏感词
-                sb.append(text.charAt(position));
-                position++;
+                sb.append(text.charAt(begin));
+                position = begin + 1;
                 begin = position;
                 tempNode = rootNode;
 

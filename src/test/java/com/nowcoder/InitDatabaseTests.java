@@ -1,6 +1,6 @@
 package com.nowcoder;
 
-import com.nowcoder.dao.LoginTicketDao;
+import com.nowcoder.dao.LoginTicketDAO;
 import com.nowcoder.dao.QuestionDAO;
 import com.nowcoder.dao.UserDAO;
 import com.nowcoder.model.LoginTicket;
@@ -29,7 +29,7 @@ public class InitDatabaseTests {
     private QuestionDAO questionDAO;
 
     @Autowired
-    private LoginTicketDao loginTicketDao;
+    private LoginTicketDAO loginTicketDao;
 
     @Test
     public void contextLoads() {

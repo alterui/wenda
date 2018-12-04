@@ -1,6 +1,6 @@
 package com.nowcoder.interceptor;
 
-import com.nowcoder.dao.LoginTicketDao;
+import com.nowcoder.dao.LoginTicketDAO;
 import com.nowcoder.dao.UserDAO;
 import com.nowcoder.model.HostHolder;
 import com.nowcoder.model.LoginTicket;
@@ -21,7 +21,7 @@ import java.util.Date;
 public class PassportInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private LoginTicketDao loginTicketDao;
+    private LoginTicketDAO loginTicketDao;
 
     @Autowired
     private UserDAO userDAO;
