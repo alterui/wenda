@@ -4,6 +4,7 @@ import com.nowcoder.model.Comment;
 import com.nowcoder.model.EntityType;
 import com.nowcoder.model.HostHolder;
 import com.nowcoder.service.CommentService;
+import com.nowcoder.service.QuestionService;
 import com.nowcoder.utils.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,9 @@ public class CommentController {
     private CommentService commentService;
     @Autowired
     private HostHolder hostHolder;
+
+    @Autowired
+    private QuestionService questionService;
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
@@ -48,8 +52,12 @@ public class CommentController {
             comment.setEntityType(EntityType.ENTITY_QUESTION);
             comment.setContent(content);
             comment.setStatus(0);
-
+            //添加评论
             commentService.addComment(comment);
+            //添加评论成功后，要更新评论数
+            int commentCounts = commentService.getCommentCounts(questionId, EntityType.ENTITY_QUESTION);
+            questionService.updateCommentCounts(questionId, commentCounts);
+
         } catch (Exception e) {
             logger.error("添加评论失败" + e.getMessage());
         }

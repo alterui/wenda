@@ -29,6 +29,10 @@ public class UserService {
         return userDAO.selectById(id);
     }
 
+    public User getUserByName(String name) {
+        return userDAO.selectByName(name);
+    }
+
     /**
      * 将前端页面传来的username和password传入到数据库中，如果输入错误，则把错误信息反馈到前端
      * @param username
