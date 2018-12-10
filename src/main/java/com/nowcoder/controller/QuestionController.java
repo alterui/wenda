@@ -83,24 +83,16 @@ public class QuestionController {
         for (Comment comment : commentListByEntity) {
             ViewObject vo = new ViewObject();
             vo.set("comment", comment);
-            //将评论者的信息绑定到vo里面
-
-            vo.set("liked",likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_COMMENT,comment.getId()));
-            //vo.set("liked", 1);
-
-
-
+            //踩赞状态
+            vo.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+            //赞的数量
             vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
-
+            //将评论者的信息绑定到vo里面
             vo.set("user", userService.getUser(comment.getUserId()));
 
             comments.add(vo);
         }
         model.addAttribute("comments", comments);
-
-
-
-
         model.addAttribute("question", question);
         model.addAttribute("user", user);
         return "detail";

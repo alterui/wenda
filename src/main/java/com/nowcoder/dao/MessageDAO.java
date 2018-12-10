@@ -2,10 +2,7 @@ package com.nowcoder.dao;
 
 import com.nowcoder.model.Comment;
 import com.nowcoder.model.Message;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -52,8 +49,23 @@ public interface MessageDAO {
                                          @Param("limit") int limit);
 
 
+    /**
+     * 未读数目
+     * @param userId
+     * @param conversationId
+     * @return
+     */
     @Select({"select count(id) from "+TABLE_NAME+" where has_read=0 and to_id=#{userId} and conversation_id=#{conversationId}"})
     int getUnReadCount(@Param("userId") int userId,
                        @Param("conversationId") String conversationId);
+
+    /**
+     * 将has_read置为1，表示已经读过
+     * @param userId
+     * @param conversationId
+     */
+    @Update({"update "+ TABLE_NAME +" set has_read=1  where to_id=#{userId} and conversation_id=#{conversationId} "})
+    void updateUnReadCount(@Param("userId") int userId,
+                           @Param("conversationId") String conversationId);
 
 }

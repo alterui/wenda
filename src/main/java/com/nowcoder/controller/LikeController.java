@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * 前端点击赞，即将总赞数+1.
+ * 直接点击踩，没有变化。
+ * 先点击赞，然后踩，数目先+1，再减1。总数目只是总的点赞数
  * Created by ALTERUI on 2018/12/7 9:32
  */
 @Controller
@@ -37,8 +40,6 @@ public class LikeController {
     @RequestMapping(path = {"/like"}, method = {RequestMethod.POST})
     @ResponseBody
     public String like(@RequestParam("commentId") int commentId) {
-        logger.info("hhhhh");
-        System.out.println("ssssssss");
 
         if (hostHolder.getUser() == null) {
             return WendaUtil.getJSONString(999);
@@ -52,9 +53,7 @@ public class LikeController {
     @RequestMapping(path = {"/dislike"}, method = {RequestMethod.POST})
     @ResponseBody
     public String dislike(@RequestParam("commentId") int commentId) {
-        logger.info("hhhhh");
 
-        System.out.println("ssssssss");
         if (hostHolder.getUser() == null) {
             return WendaUtil.getJSONString(999);
         }

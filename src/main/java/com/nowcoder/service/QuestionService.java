@@ -25,7 +25,7 @@ public class QuestionService {
     }
 
     public int addQuestion(Question question) {
-        //进行htmlguol
+        //进行html过滤
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
         question.setContent(HtmlUtils.htmlEscape(question.getContent()));
 

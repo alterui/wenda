@@ -34,7 +34,7 @@ public class SensitiveService implements InitializingBean {
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String lineTxt;
             while ((lineTxt = reader.readLine()) != null) {
-                //将读取的内容添加到敏感词树种
+                //将读取的内容添加到敏感词树中
                 addWord(lineTxt.trim());
             }
 

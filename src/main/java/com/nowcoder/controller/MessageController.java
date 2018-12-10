@@ -7,16 +7,12 @@ import com.nowcoder.model.ViewObject;
 import com.nowcoder.service.MessageService;
 import com.nowcoder.service.UserService;
 import com.nowcoder.utils.WendaUtil;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -123,5 +119,25 @@ public class MessageController {
             logger.error("获取详情失败"+e.getMessage());
         }
         return "letterDetail";
+    }
+
+
+    /**
+     * 读过私信之后，将未读数目置为0
+     * 缺点：没有使用ajax动态刷新。
+     * @param conversationId
+     * @return
+     */
+    @RequestMapping(path = "/msg/remHasRead/{conversationId}", method = RequestMethod.GET)
+    @ResponseBody
+    public String remHasRead(@PathVariable("conversationId") String conversationId) {
+
+        if (hostHolder.getUser() == null) {
+            return "redirect:/";
+        }
+        messageService.updateUnReadCount(hostHolder.getUser().getId(), conversationId);
+
+        return WendaUtil.getJSONString(0);
+
     }
 }
