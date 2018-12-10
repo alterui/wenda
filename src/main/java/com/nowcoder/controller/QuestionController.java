@@ -2,6 +2,7 @@ package com.nowcoder.controller;
 
 import com.nowcoder.model.*;
 import com.nowcoder.service.CommentService;
+import com.nowcoder.service.LikeService;
 import com.nowcoder.service.QuestionService;
 import com.nowcoder.service.UserService;
 import com.nowcoder.utils.WendaUtil;
@@ -33,6 +34,9 @@ public class QuestionController {
 
     @Autowired
     private HostHolder hostHolder;
+
+    @Autowired
+    private LikeService likeService;
     public static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     @RequestMapping(value = "/question/add",method = RequestMethod.POST)
@@ -80,11 +84,23 @@ public class QuestionController {
             ViewObject vo = new ViewObject();
             vo.set("comment", comment);
             //将评论者的信息绑定到vo里面
+
+            vo.set("liked",likeService.getLikeStatus(hostHolder.getUser().getId(),EntityType.ENTITY_COMMENT,comment.getId()));
+            //vo.set("liked", 1);
+
+
+
+            vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
+
             vo.set("user", userService.getUser(comment.getUserId()));
 
             comments.add(vo);
         }
         model.addAttribute("comments", comments);
+
+
+
+
         model.addAttribute("question", question);
         model.addAttribute("user", user);
         return "detail";
