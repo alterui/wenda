@@ -8,6 +8,8 @@ public class RedisKeyUtil {
     private static String SPLIT = ":";
     private static String BIZ_LIKE = "LIKE";
     private static String BIZ_DISLIKE = "DISLIKE";
+    //事件队列
+    private static String BIZ_EVENTQUEUE = "EVENT_QUEUE";
 
     /**
      * 获取LikeKey,"dd"+1,会直接变成字符串
@@ -21,6 +23,10 @@ public class RedisKeyUtil {
 
     public static String getDisLikeKey(int entityType, int entityId) {
         return BIZ_DISLIKE + SPLIT + entityType + SPLIT + entityId;
+    }
+
+    public static String getEventQueue() {
+        return BIZ_EVENTQUEUE;
     }
 
 

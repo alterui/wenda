@@ -33,9 +33,16 @@
                     $conversation.user.name
                 </a>
                 <p class="letter-brief">
+
+                    <a href="/msg/detail?conversationId=$conversation.conversation.conversationId">
+                        $conversation.conversation.content
+                    </a>
+                <!--
+                一个超链接同时跳转的用法
                 <a href="/msg/detail?conversationId=$conversation.conversation.conversationId"  onclick="window.location.href='/msg/remHasRead/$conversation.conversation.conversationId'">
                                  $conversation.conversation.content
                 </a>
+                -->
                 </p>
                 </div>
                 </li>

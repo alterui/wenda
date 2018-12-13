@@ -100,6 +100,8 @@ public class MessageController {
                                         Model model) {
 
         try {
+
+            messageService.updateUnReadCount(hostHolder.getUser().getId(), conversationId);
             List<Message> messagesList = messageService.getMessagesByConversationId(conversationId, 0, 10);
             List<ViewObject> messages = new ArrayList<>();
 
@@ -125,10 +127,11 @@ public class MessageController {
     /**
      * 读过私信之后，将未读数目置为0
      * 缺点：没有使用ajax动态刷新。
+     * 可以直接在questionController中完成这个功能
      * @param conversationId
      * @return
      */
-    @RequestMapping(path = "/msg/remHasRead/{conversationId}", method = RequestMethod.GET)
+    /*@RequestMapping(path = "/msg/remHasRead/{conversationId}", method = RequestMethod.GET)
     @ResponseBody
     public String remHasRead(@PathVariable("conversationId") String conversationId) {
 
@@ -139,5 +142,5 @@ public class MessageController {
 
         return WendaUtil.getJSONString(0);
 
-    }
+    }*/
 }

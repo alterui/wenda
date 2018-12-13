@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nowcoder.model.User;
 import redis.clients.jedis.Jedis;
 
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Tuple;
 
 /**
@@ -76,7 +77,7 @@ public class JedisAdapterTest {
         print(6, jedis.lindex(list, 0));//a8
 
         //动态插入元素
-       // print(7, jedis.linsert(list, ListPosition.AFTER, "a4", "xx"));
+       //print(7, jedis.linsert(list, ListPosition.AFTER, "a4", "xx"));
         //print(8, jedis.linsert(list, ListPosition.BEFORE, "a4", "bb"));
         print(9,jedis.lrange(list,0,12));
 
@@ -157,7 +158,8 @@ public class JedisAdapterTest {
 
 
         /**
-         * 优先队列
+         * 排行榜
+         *
          */
 
         String rankKey = "rankKey";
@@ -222,13 +224,14 @@ public class JedisAdapterTest {
         print(41, jedis.get("pv"));
 
 
-      /*  JedisPool pool = new JedisPool();
+        JedisPool pool = new JedisPool();
         for (int i = 0; i < 100; i++) {
            Jedis j =  pool.getResource();
-           System.out.println(jedis.get("pv"));
-           print(42, jedis.get("pv"));
+            j.set("pv1", "100");
+           System.out.println(j.get("pv1"));
+           print(42, j.get("pv1"));
            j.close();//默认是8条线程
-        }*/
+        }
 
         User user = new User();
         user.setPassword("*****");

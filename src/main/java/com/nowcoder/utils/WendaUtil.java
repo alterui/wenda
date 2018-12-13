@@ -14,6 +14,9 @@ public class WendaUtil {
     //设置匿名用户
     public static int ANONYMOUS_USERID = 3;
 
+    //设置系统管理员用户
+    public static int ADMIN_USERID = 4;
+
     private static final Logger logger = LoggerFactory.getLogger(WendaUtil.class);
 
     public static String getJSONString(int code, String msg) {

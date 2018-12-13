@@ -1,8 +1,13 @@
 package com.nowcoder.controller;
 
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
+import com.nowcoder.model.Comment;
 import com.nowcoder.model.EntityType;
 import com.nowcoder.model.HostHolder;
+import com.nowcoder.model.Message;
 import com.nowcoder.service.CommentService;
 import com.nowcoder.service.LikeService;
 
@@ -27,13 +32,19 @@ public class LikeController {
 
     private static final Logger logger = LoggerFactory.getLogger(LikeController.class);
     @Autowired
-    LikeService likeService;
+    private LikeService likeService;
 
     @Autowired
-    HostHolder hostHolder;
+    private HostHolder hostHolder;
 
     @Autowired
-    CommentService commentService;
+    private EventProducer eventProducer;
+
+
+
+    @Autowired
+    private CommentService commentService;
+
 
 
 
@@ -45,6 +56,15 @@ public class LikeController {
             return WendaUtil.getJSONString(999);
         }
 
+        Comment comment = commentService.getCommentById(commentId);
+
+        //将事件添加到优先队列中去
+        eventProducer.fireEvent(new EventModel(EventType.LIKE).
+                setActorId(hostHolder.getUser().getId()).
+                setEntityType(EntityType.ENTITY_COMMENT)
+                .setEntityId(commentId).
+                        setEntityOwnerId(comment.getUserId())
+                .setExt("questionId",String.valueOf(comment.getEntityId())));
 
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId);
         return WendaUtil.getJSONString(0, String.valueOf(likeCount));

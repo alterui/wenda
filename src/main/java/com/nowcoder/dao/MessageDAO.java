@@ -49,6 +49,10 @@ public interface MessageDAO {
                                          @Param("limit") int limit);
 
 
+    @Select({"select "+SELECT_FIELDS+" from "+TABLE_NAME+" " +
+            "where id=#{id} "})
+    Message getMessageById(int id);
+
     /**
      * 未读数目
      * @param userId
