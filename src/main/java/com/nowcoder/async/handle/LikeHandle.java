@@ -39,9 +39,24 @@ public class LikeHandle implements EventHandler {
 
         //actorId为触发者id，即为谁点了赞，触发了这一事件
         User user = userService.getUser(model.getActorId());
-        message.setContent("用户" + user.getName() +
-                "赞了您的评论，点击链接查看\"<html>\"\"<a href = http:127.0.0.1:8080/question/\" +\n" +
-                "                model.getExt(\"questionId\")>\"\"</a>\"\"</html>");
+        StringBuffer stringBuffer = new StringBuffer();
+        /*stringBuffer.append("用户" + user.getName());
+        stringBuffer.append("赞了您的评论，点击链接查看");
+        stringBuffer.append("<html>");
+
+        stringBuffer.append("<meta http-equiv='refresh' url='http://127.0.0.1:8080/question\"+ model.getExt(\"questionId\")'");
+        stringBuffer.append(">");
+        stringBuffer.append("http:127.0.0.1:8080/question\"+ model.getExt(\"questionId\")");
+        //stringBuffer.append("</a>");
+        stringBuffer.append("</html>");*/
+
+        stringBuffer.append("<html>");
+        stringBuffer.append("用户" + user.getName());
+        stringBuffer.append("赞了您的评论，点击链接查看");
+        stringBuffer.append("<a href='http://127.0.0.1:8080/question/" +model.getExt("questionId") +" ' target='_blank' >");
+        stringBuffer.append("http:127.0.0.1:8080/question/"+model.getExt("questionId")+"");
+        stringBuffer.append("</a></html>");
+        message.setContent(stringBuffer.toString());
 
         messageService.addMessage(message);
 
