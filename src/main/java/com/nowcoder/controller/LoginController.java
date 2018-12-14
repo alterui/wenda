@@ -1,5 +1,8 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.service.UserService;
 import com.sun.deploy.net.HttpResponse;
 import org.apache.commons.lang.StringUtils;
@@ -25,6 +28,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -81,14 +87,21 @@ public class LoginController {
                         HttpServletResponse response) {
 
         Map<String, String> mapLogin = userService.login(username, password);
-        try {
+        //try {
             if (mapLogin.containsKey("ticket")) {
                 Cookie cookie = new Cookie("ticket", mapLogin.get("ticket"));
                 cookie.setPath("/");
+
+
                 if (rememberme) {
                     cookie.setMaxAge(3600 * 24 * 30);
                 }
                 response.addCookie(cookie);
+
+
+                eventProducer.fireEvent(new EventModel(EventType.LOGIN)
+                        .setExt("username", username).setExt("email", "2389889598@qq.com")
+                        .setActorId(Integer.parseInt(mapLogin.get("userId"))));
                 if (StringUtils.isNotBlank(next)) {
                     return "redirect:" + next;
                 }
@@ -98,10 +111,10 @@ public class LoginController {
                 return "login";
             }
 
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             logger.error("登录异常" + e.getMessage());
             return "login";
-        }
+        }*/
 
     }
 
