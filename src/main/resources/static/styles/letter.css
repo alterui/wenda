@@ -6653,8 +6653,6 @@ header.navbar .navbar-toggle .icon-bar {
     color: #999;
     font-size: 12px;
 
-
-
 }
 .letter-info p {
     line-height: 2;
@@ -6669,7 +6667,7 @@ header.navbar .navbar-toggle .icon-bar {
     float: left;
     font-size: 14px;
     line-height: 1em;
-    width: 9000px;
+    width: 320px;
 }
 .letter-detail .letter-name {
     position: absolute;
@@ -6798,7 +6796,6 @@ header.navbar .navbar-toggle .icon-bar {
     width: 300px;
     line-height: 1.6;
     font-size: 14px;
-    color: #0a1015;
 }
 .chat-content a {
     color: #25bb9b;

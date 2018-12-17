@@ -70,29 +70,23 @@ public class MessageController {
 
     @RequestMapping(path = "/msg/list", method = RequestMethod.GET)
     public String getConversationList(Model model) {
-        try {
-            if (hostHolder.getUser() == null) {
-                return "redirect:/";
-            }
-            List<Message> conversationList = messageService.getConversationList(hostHolder.getUser().getId(), 0, 10);
-            List<ViewObject> messages = new ArrayList<>();
-            for (Message message : conversationList) {
-                ViewObject vo = new ViewObject();
-                vo.set("conversation", message);
-                //读取发送者的信息，即发送方
-                vo.set("user", userService.getUser(message.getFromId()));
-                //未读个数
-                vo.set("unread", messageService.getUnReadCount(hostHolder.getUser().getId(), message.getConversationId()));
-                //将消息和对方用户绑定到vo中
-                messages.add(vo);
-            }
-
-            model.addAttribute("conversations", messages);
-        } catch (Exception e) {
-            logger.error("获取会话列表失败" + e.getMessage());
+        if (hostHolder.getUser() == null) {
+            return "redirect:/reglogin";
         }
-        return "letter";
+        int localUserId = hostHolder.getUser().getId();
+        List<Message> conversationList = messageService.getConversationList(localUserId, 0, 10);
+        List<ViewObject> conversations = new ArrayList<ViewObject>();
+        for (Message message : conversationList) {
+            ViewObject vo = new ViewObject();
+            vo.set("message", message);
+            int targetId = message.getFromId() == localUserId ? message.getToId() : message.getFromId();
+            vo.set("user", userService.getUser(targetId));
 
+            vo.set("unread", messageService.getUnReadCount(hostHolder.getUser().getId(), message.getConversationId()));
+            conversations.add(vo);
+        }
+        model.addAttribute("conversations", conversations);
+        return "letter";
     }
 
     @RequestMapping(path = "/msg/detail",method = RequestMethod.GET)
