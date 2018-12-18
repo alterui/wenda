@@ -100,7 +100,7 @@ public class LoginController {
 
 
                 eventProducer.fireEvent(new EventModel(EventType.LOGIN)
-                        .setExt("username", username).setExt("email", "2389889598@qq.com")
+                        .setExt("username", username).setExt("email", "656812771@qq.com")
                         .setActorId(Integer.parseInt(mapLogin.get("userId"))));
                 if (StringUtils.isNotBlank(next)) {
                     return "redirect:" + next;

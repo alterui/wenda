@@ -2,7 +2,9 @@
   <dictionary name="ALTERUI">
     <words>
       <w>alterui</w>
+      <w>followees</w>
       <w>rememberme</w>
+      <w>unfollow</w>
     </words>
   </dictionary>
 </component>

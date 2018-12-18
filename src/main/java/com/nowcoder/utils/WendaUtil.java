@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
+import java.util.Map;
 
 /**
  * Created by ALTERUI on 2018/11/5 13:15
@@ -25,6 +26,16 @@ public class WendaUtil {
         jsonObject.put("msg", msg);
         return jsonObject.toJSONString();
     }
+
+    public static String getJSONString(int code, Map<String,Object> map) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code", code);
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            jsonObject.put(entry.getKey(), entry.getValue());
+        }
+        return jsonObject.toJSONString();
+    }
+
 
     public static String getJSONString(int code) {
         JSONObject jsonObject = new JSONObject();

@@ -52,6 +52,15 @@ public interface CommentDAO {
    int getCommentCounntByEntity(@Param("entityId") int entityId,
                                 @Param("entityType") int entityType);
 
+    /**
+     * 通过id获取评论数量
+     * @param id
+     * @return
+     */
+    @Select({"select count(id) from "+TABLE_NAME+" " +
+            "where  id= #{id} "})
+    int getCommentCountById(int id);
+
 
     @Update({"update "+TABLE_NAME+" set status=#{status} where id=#{id}"})
     int updateCommentStatus(@Param("status") int status,

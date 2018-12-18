@@ -30,9 +30,9 @@
                     // 文字
                     oEl.html(bFollow ? '关注' : '取消关注');
                 },
-                error: function (oResult) {
+               /* error: function (oResult) {
                     alert('出现错误，请重试');
-                },
+                },*/
                 always: function () {
                     oEl.removeAttr('data-limit');
                 }
@@ -75,9 +75,9 @@
                         oListEl.prepend('<a class="zm-item-link-avatar js-user-' + oResult.id + '" href="/user/' + oResult.id + '" data-original_title="' + oResult.name + '"><img src="' + oResult.headUrl + '" class="zm-item-img-avatar"></a>');
                     }
                 },
-                error: function (oResult) {
+               /* error: function (oResult) {
                     alert('出现错误，请重试');
-                },
+                },*/
                 always: function () {
                     oEl.removeAttr('data-limit');
                 }

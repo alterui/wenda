@@ -75,8 +75,11 @@ public class MessageController {
         }
         int localUserId = hostHolder.getUser().getId();
         List<Message> conversationList = messageService.getConversationList(localUserId, 0, 10);
+
         List<ViewObject> conversations = new ArrayList<ViewObject>();
+
         for (Message message : conversationList) {
+
             ViewObject vo = new ViewObject();
             vo.set("message", message);
             int targetId = message.getFromId() == localUserId ? message.getToId() : message.getFromId();
