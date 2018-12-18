@@ -5,6 +5,7 @@
       <w>followees</w>
       <w>rememberme</w>
       <w>unfollow</w>
+      <w>zcard</w>
     </words>
   </dictionary>
 </component>

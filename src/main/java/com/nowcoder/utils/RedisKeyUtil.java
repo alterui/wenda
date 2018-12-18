@@ -40,17 +40,17 @@ public class RedisKeyUtil {
      * @return
      */
     public static String getFollowerKey(int entityType, int entityId) {
-        return BIZ_FOLLOWER + SPLIT + entityType + entityId;
+        return BIZ_FOLLOWER + SPLIT + entityType + SPLIT + entityId;
     }
 
     /**
      * 每个用户关注的对象
      * @param userId
-     * @param entityTpye
+     * @param
      * @return
      */
-    public static String getFolloweeKey(int userId, int entityTpye) {
-        return BIZ_FOLLOWEE + SPLIT + userId + entityTpye;
+    public static String getFolloweeKey(int userId, int entityType) {
+        return BIZ_FOLLOWEE + SPLIT + String.valueOf(userId) + SPLIT + String.valueOf(entityType);
     }
 
 

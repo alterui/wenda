@@ -140,7 +140,7 @@ public class FollowController {
             return WendaUtil.getJSONString(1, "该问题不存在");
         }
 
-        boolean ret = followService.follow(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionId);
+        boolean ret = followService.unFollow(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionId);
 
 
 
@@ -171,7 +171,7 @@ public class FollowController {
             model.addAttribute("followees", getUsersInfo(0, followeesList));
         }
 
-        model.addAttribute("followeeCount", followService.getFolloweeCount(EntityType.ENTITY_USER,userId));
+        model.addAttribute("followeeCount", followService.getFolloweeCount(userId,EntityType.ENTITY_USER));
         model.addAttribute("curUser", userService.getUser(userId));
         return "followees";
     }

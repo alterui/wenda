@@ -43,7 +43,7 @@ public class FollowService {
         //把实体的粉丝添加进来
         tx.zadd(followerKey, date.getTime(), String.valueOf(userId));
         //当前用户添加该关注对象
-        tx.zadd(followeeKey, date.getTime(), String.valueOf(entityType));
+        tx.zadd(followeeKey, date.getTime(), String.valueOf(entityId));
         //事务执行
         List<Object> exec = jedisAdapter.exec(tx, jedis);
         return exec.size() == 2 && (long) exec.get(0) > 0 && (long) exec.get(1) > 0;
@@ -75,7 +75,7 @@ public class FollowService {
         //把实体的粉丝移除
         tx.zrem(followerKey,String.valueOf(userId));
         //当前用户移除
-        tx.zrem(followeeKey, String.valueOf(entityType));
+        tx.zrem(followeeKey, String.valueOf(entityId));
         //事务执行
         List<Object> exec = jedisAdapter.exec(tx, jedis);
         return exec.size() == 2 && (long) exec.get(0) > 0 && (long) exec.get(1) > 0;
@@ -93,7 +93,7 @@ public class FollowService {
     //获取关注列表
     public List<Integer> getFolloweesList(int entityType,int userId, int count) {
         //获取粉丝的key
-        String followeeKey = RedisKeyUtil.getFollowerKey(userId, entityType);
+        String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
         return getListFromSet(jedisAdapter.zrevrange(followeeKey, 0, count));
 
     }
@@ -144,11 +144,10 @@ public class FollowService {
      * @param userId
      * @return
      */
-    public long getFolloweeCount(int entityType, int userId) {
+    public long getFolloweeCount(int userId, int entityType) {
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
         return jedisAdapter.zcard(followeeKey);
     }
-
 
     /**
      * 是否为实体对象的粉丝

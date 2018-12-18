@@ -21,6 +21,15 @@ public class JedisAdapterTest {
         //将连接的数据库的值全部删除
         jedis.flushDB();
 
+
+    }
+
+    public static void test() {
+
+
+        Jedis jedis = new Jedis("redis://localhost:6379/9");
+        //将连接的数据库的值全部删除
+        jedis.flushDB();
         /**
          * set - get
          */
@@ -77,7 +86,7 @@ public class JedisAdapterTest {
         print(6, jedis.lindex(list, 0));//a8
 
         //动态插入元素
-       //print(7, jedis.linsert(list, ListPosition.AFTER, "a4", "xx"));
+        //print(7, jedis.linsert(list, ListPosition.AFTER, "a4", "xx"));
         //print(8, jedis.linsert(list, ListPosition.BEFORE, "a4", "bb"));
         print(9,jedis.lrange(list,0,12));
 
@@ -226,11 +235,11 @@ public class JedisAdapterTest {
 
         JedisPool pool = new JedisPool();
         for (int i = 0; i < 100; i++) {
-           Jedis j =  pool.getResource();
+            Jedis j =  pool.getResource();
             j.set("pv1", "100");
-           System.out.println(j.get("pv1"));
-           print(42, j.get("pv1"));
-           j.close();//默认是8条线程
+            System.out.println(j.get("pv1"));
+            print(42, j.get("pv1"));
+            j.close();//默认是8条线程
         }
 
         User user = new User();

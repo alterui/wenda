@@ -14,10 +14,10 @@
             if (!sId) {
                 return;
             }
-            // 禁止频繁点击
+           /* // 禁止频繁点击
             if (oEl.attr('data-limit')) {
                 return;
-            }
+            }*/
             oEl.attr('data-limit', '1');
             var bFollow = oEl.attr('data-status') === '1';
             Action[bFollow ? 'unFollowUser' : 'followUser']({
@@ -30,7 +30,7 @@
                     // 文字
                     oEl.html(bFollow ? '关注' : '取消关注');
                 },
-               /* error: function (oResult) {
+                /*error: function (oResult) {
                     alert('出现错误，请重试');
                 },*/
                 always: function () {
@@ -50,10 +50,10 @@
             if (!sId) {
                 return;
             }
-            // 禁止频繁点击
+            /*// 禁止频繁点击
             if (oEl.attr('data-limit')) {
                 return;
-            }
+            }*/
             oEl.attr('data-limit', '1');
             var bFollow = oEl.attr('data-status') === '1';
             Action[bFollow ? 'unFollowQuestion' : 'followQuestion']({

@@ -75,6 +75,9 @@ public class QuestionController {
     @RequestMapping(value = "question/{qid}")
     public String QuestionDetail(Model model,
                                  @PathVariable("qid") int qid) {
+        if (hostHolder.getUser() == null) {
+            return "redirect:/";
+        }
 
         Question question = questionService.selectQuestionById(qid);
         User user = userService.getUser(question.getUserId());
