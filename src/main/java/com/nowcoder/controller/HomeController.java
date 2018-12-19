@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,10 +42,13 @@ public class HomeController {
 
 
     @RequestMapping(path = {"/user/{userId}"}, method = RequestMethod.GET)
-    public String userHome(Model model, @PathVariable("userId") int userId) {
+    public String userHome(Model model,
+                           @PathVariable("userId") int userId,
+                           HttpServletResponse response) {
         model.addAttribute("vos", getQuestion(userId, 0, 10));
         User user = userService.getUser(userId);
         ViewObject vo = new ViewObject();
+
         vo.set("user", user);
         vo.set("commentCount", commentService.getCommentCountById(userId));
         vo.set("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, userId));
@@ -61,6 +65,9 @@ public class HomeController {
 
     @RequestMapping(path = {"/", "/index"}, method = RequestMethod.GET)
     public String home(Model model) {
+
+
+        model.addAttribute("localUser", hostHolder.getUser());
 
 
         model.addAttribute("vos", getQuestion(0,0,10));
