@@ -1,10 +1,15 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EventConsumer;
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.model.Comment;
 import com.nowcoder.model.EntityType;
 import com.nowcoder.model.HostHolder;
 import com.nowcoder.service.CommentService;
 import com.nowcoder.service.QuestionService;
+import com.nowcoder.service.UserService;
 import com.nowcoder.utils.WendaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +34,12 @@ public class CommentController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private EventProducer eventProducer;
+
+    @Autowired
+    private UserService userService;
 
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
@@ -57,6 +68,12 @@ public class CommentController {
             //添加评论成功后，要更新评论数
             int commentCounts = commentService.getCommentCounts(questionId, EntityType.ENTITY_QUESTION);
             questionService.updateCommentCounts(questionId, commentCounts);
+
+            eventProducer.fireEvent(new EventModel(EventType.COMMIT)
+                    .setActorId(hostHolder.getUser().getId())
+                    .setEntityId(EntityType.ENTITY_COMMENT)
+                    .setEntityId(questionId)
+                    .setEntityOwnerId(userService.getUser(comment.getUserId()).getId()));
 
         } catch (Exception e) {
             logger.error("添加评论失败" + e.getMessage());

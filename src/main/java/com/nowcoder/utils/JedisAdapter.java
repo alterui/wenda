@@ -247,7 +247,23 @@ public class JedisAdapter implements InitializingBean {
         Jedis jedis = null;
         try {
             jedis = pool.getResource();
+
             return jedis.zscore(key,member);
+        } catch (Exception e) {
+            logger.error("发生异常" + e.getMessage());
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+    public List<String> lrange(String key,int begin,int end) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.lrange(key, begin, end);
         } catch (Exception e) {
             logger.error("发生异常" + e.getMessage());
         } finally {
