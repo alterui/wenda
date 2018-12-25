@@ -16,13 +16,13 @@ public class JedisAdapterTest {
         System.out.println(String.format("%d,%s", index, object.toString()));
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         Jedis jedis = new Jedis("redis://localhost:6379/9");
         //将连接的数据库的值全部删除
         jedis.flushDB();
 
 
-    }
+    }*/
 
     public static void test() {
 

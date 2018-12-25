@@ -20,8 +20,8 @@ public class QuestionService {
     @Autowired
     private SensitiveService sensitiveService;
 
-    public List<Question> getLatestQuestions(int userId, int offset, int limit) {
-        return questionDAO.selectLatestQuestions(userId, offset, limit);
+    public List<Question> getLatestQuestions(int userId) {
+        return questionDAO.selectLatestQuestions(userId);
     }
 
     public int addQuestion(Question question) {

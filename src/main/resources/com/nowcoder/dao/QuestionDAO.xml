@@ -15,6 +15,5 @@
             WHERE user_id = #{userId}
         </if>
         ORDER BY id DESC
-        LIMIT #{offset},#{limit}
     </select>
 </mapper>

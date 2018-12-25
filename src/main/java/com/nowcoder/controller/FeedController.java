@@ -48,7 +48,7 @@ public class FeedController {
 
         int localId = hostHolder.getUser() == null ? 0 : hostHolder.getUser().getId();
         List<String> feedIds = new ArrayList<>();
-        feedIds = jedisAdapter.lrange(RedisKeyUtil.getTimelineKey(localId), 0, 10);
+        feedIds = jedisAdapter.lrange(RedisKeyUtil.getTimelineKey(localId), 0, 100);
         List<Feed> feeds = new ArrayList<>();
         for (String feedId : feedIds) {
             Feed feed = feedService.selectFeedById(Integer.parseInt(feedId));
@@ -73,7 +73,7 @@ public class FeedController {
             followees = followService.getFolloweesList(EntityType.ENTITY_USER, localId, Integer.MAX_VALUE);
         }
 
-        List<Feed> feeds = feedService.selectFeedByIds(Integer.MAX_VALUE, followees, 10);
+        List<Feed> feeds = feedService.selectFeedByIds(Integer.MAX_VALUE, followees, 100);
         model.addAttribute("feeds", feeds);
         return "feeds";
 

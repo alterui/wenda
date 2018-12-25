@@ -82,7 +82,7 @@ public class HomeController {
          */
         List<ViewObject> vos = new ArrayList<>();
         //把问题表的数据读取过来
-        List<Question> questionsList = questionService.getLatestQuestions(userId,offset, limit);
+        List<Question> questionsList = questionService.getLatestQuestions(userId);
         for (Question question : questionsList) {
             //把问题和问题提出的用户绑定起来
             ViewObject vo = new ViewObject();
