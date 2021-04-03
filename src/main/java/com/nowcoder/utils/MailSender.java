@@ -16,9 +16,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import java.util.Map;
 import java.util.Properties;
-/**
- * Created by ALTERUI on 2018/12/14 19:21
- */
+
 
 @Service
 public class MailSender implements InitializingBean {
@@ -59,7 +57,7 @@ public class MailSender implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         mailSender = new JavaMailSenderImpl();
-        //填写你注册的163哟徐昂
+        //填写你注册的163的邮箱
         mailSender.setUsername("XXX@163.com");
         mailSender.setPassword("wenda123");
         mailSender.setHost("smtp.163.com");
