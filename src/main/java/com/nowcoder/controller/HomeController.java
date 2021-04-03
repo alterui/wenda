@@ -63,6 +63,17 @@ public class HomeController {
 
     }
 
+
+    @RequestMapping(path = {"/search"}, method = RequestMethod.GET)
+    public String seacher(Model model,@RequestParam("q") String value) {
+
+        model.addAttribute("localUser", hostHolder.getUser());
+
+
+        model.addAttribute("vos", getQuestionSearch(0,0,10,value));
+        return "index";
+    }
+
     @RequestMapping(path = {"/", "/index"}, method = RequestMethod.GET)
     public String home(Model model) {
 
@@ -72,6 +83,29 @@ public class HomeController {
 
         model.addAttribute("vos", getQuestion(0,0,10));
         return "index";
+    }
+
+    private List<ViewObject> getQuestionSearch(int userId, int offset, int limit, String keyword) {
+
+        /**
+         * 前端问题广场页面显示的是问题+用户，所以可以返回问题+用户。
+         * 做法：可以创建一个vo类，用于存放问题+用户
+         */
+        List<ViewObject> vos = new ArrayList<>();
+        //把问题表的数据读取过来
+        List<Question> questionsList = questionService.getLatestQuestionsAndKeyWord(userId,keyword);
+        for (Question question : questionsList) {
+            //把问题和问题提出的用户绑定起来
+            ViewObject vo = new ViewObject();
+            vo.set("question", question);
+            vo.set("user", userService.getUser(question.getUserId()));
+            //将用户粉丝传入
+            vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESTION, question.getId()));
+
+
+            vos.add(vo);
+        }
+        return vos;
     }
 
     private List<ViewObject> getQuestion(int userId, int offset, int limit) {

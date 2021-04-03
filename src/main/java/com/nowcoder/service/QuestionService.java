@@ -44,4 +44,8 @@ public class QuestionService {
     public int updateCommentCounts(int id, int commentCount) {
         return questionDAO.updateCommentCount(id, commentCount);
     }
+
+    public List<Question> getLatestQuestionsAndKeyWord(int userId, String keyword) {
+        return questionDAO.getLatestQuestionsAndKeyWord(userId,keyword);
+    }
 }

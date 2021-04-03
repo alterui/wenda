@@ -31,8 +31,10 @@ public class MailSender implements InitializingBean {
     public boolean sendWithHTMLTemplate(String to, String subject,
                                         String template, Map<String, Object> model) {
         try {
-            String nick = MimeUtility.encodeText("ALTERUI");
-            InternetAddress from = new InternetAddress(nick + "<njut_lr@163.com>");
+            //发送邮件的昵称
+            String nick = MimeUtility.encodeText("发送邮件的昵称");
+            //注册一个163邮箱
+            InternetAddress from = new InternetAddress(nick + "<XXX@163.com>");
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             String result = VelocityEngineUtils
@@ -49,10 +51,16 @@ public class MailSender implements InitializingBean {
         }
     }
 
+    /**
+     * 需要进行一个配置：
+     * @Url：https://www.jianshu.com/p/fe9f96b5bd29
+     * @throws Exception
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         mailSender = new JavaMailSenderImpl();
-        mailSender.setUsername("njut_lr@163.com");
+        //填写你注册的163哟徐昂
+        mailSender.setUsername("XXX@163.com");
         mailSender.setPassword("wenda123");
         mailSender.setHost("smtp.163.com");
         //mailSender.setHost("smtp.qq.com");

@@ -16,4 +16,22 @@
         </if>
         ORDER BY id DESC
     </select>
+
+    <select id="getLatestQuestionsAndKeyWord" resultType="com.nowcoder.model.Question">
+        SELECT
+        <include refid="selectFields"/>
+        FROM
+        <include refid="table"/>
+        <where>
+
+        <if test="userId != 0">
+            and user_id = #{userId}
+        </if>
+
+        <if test="keyword != '' and keyword!= null ">
+            and title  like concat('%',#{keyword,jdbcType=VARCHAR},'%')
+        </if>
+        </where>
+        ORDER BY id DESC
+    </select>
 </mapper>
